@@ -1,0 +1,199 @@
+.rouletteField {
+    max-width: min(830px, 100%);
+    margin: 0 auto;
+    width: 100%;
+}
+
+.rouletteTable {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 6px;
+}
+
+.numberSection {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    /* Corrected: 3 for zero + 12 for numbers + 1 for 2:1 buttons */
+    grid-template-rows: repeat(5, auto);
+    gap: 6px;
+    max-width: 100%;
+    width: 100%;
+    /* Define grid-template-areas for numberSection */
+    grid-template-areas:
+        "zero num3  num6  num9  num12 num15 num18 num21 num24 num27 num30 num33 num36 row3"
+        "zero  num2  num5  num8  num11 num14 num17 num20 num23 num26 num29 num32 num35 row2"
+        "zero num1  num4  num7  num10 num13 num16 num19 num22 num25 num28 num31 num34 row1"
+        ".    range1to12 range1to12 range1to12 range1to12 range13to24 range13to24 range13to24 range13to24 range25to36 range25to36 range25to36 range25to36 ."
+        ".    low   low     even  even   red   red   black black odd   odd   high  high .";
+}
+
+.number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: clamp(35px, 6vw, 47px);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: clamp(12px, 2.5vw, 16px);
+    font-weight: 300;
+    transition: filter 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    will-change: filter, box-shadow;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.dimmed {
+    filter: brightness(50%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.numberRed {
+    background-color: #FE2247;
+    color: #FFFFFF;
+    aspect-ratio: 1 / 1;
+}
+
+.numberBlack {
+    background-color: #1A2C38;
+    color: #FFFFFF;
+    aspect-ratio: 1 / 1;
+}
+
+.numberGreen {
+    background-color: #129379;
+    color: #FFFFFF;
+    aspect-ratio: 1 / 3.255;
+}
+
+/* Style for 2:1 buttons and bottomSection buttons */
+.numberSection button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #5B7281;
+    color: #FFFFFF;
+    font-size: clamp(12px, 2.5vw, 16px);
+    font-weight: 400;
+    transition: filter 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    will-change: filter, box-shadow;
+    padding: 0;
+    margin: 0 auto;
+}
+
+/* Style for 2:1 buttons specifically */
+.numberSection button[style*="grid-area: row"] {
+    aspect-ratio: 1 / 1;
+    /* Keep 2:1 buttons square */
+}
+
+.red {
+    border: none !important;
+    color: #FFFFFF;
+    background-color: #FE2247;
+}
+
+.black {
+    border: none !important;
+    color: #FFFFFF;
+    background-color: #1A2C38;
+}
+
+/* Style for range buttons (1 to 12, 13 to 24, 25 to 36) */
+.range {
+    border-radius: 10px !important;
+    height: 47px;
+    /* Default height for range buttons */
+    aspect-ratio: unset;
+    /* Override aspect-ratio to allow height to take effect */
+}
+
+/* Style for area buttons (low, even, red, black, odd, high) */
+.area {
+    border-radius: 10px !important;
+    height: 40px;
+    /* Default height for area buttons */
+    aspect-ratio: unset;
+    /* Override aspect-ratio to allow height to take effect */
+}
+
+/* Specific styles for red and black buttons */
+.numberSection button[style*="grid-area: red"],
+.numberSection button[style*="grid-area: black"] {
+    border: none;
+}
+
+@media (max-width: 1180px) {
+    .rouletteField {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .number {
+        max-width: clamp(35px, 5vw, 40px);
+        border-radius: 4px;
+        font-size: clamp(10px, 2vw, 14px);
+    }
+
+    .numberSection button {
+        font-size: clamp(10px, 2vw, 14px);
+    }
+
+    .numberSection button[style*="grid-area: range"] {
+        height: 40px;
+        /* Reduced height for smaller screens */
+    }
+
+    .numberSection button[style*="grid-area: low"],
+    .numberSection button[style*="grid-area: even"],
+    .numberSection button[style*="grid-area: red"],
+    .numberSection button[style*="grid-area: black"],
+    .numberSection button[style*="grid-area: odd"],
+    .numberSection button[style*="grid-area: high"] {
+        height: 35px;
+        /* Reduced height for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .number {
+        max-width: clamp(35px, 4vw, 35px);
+        border-radius: 3px;
+        font-size: clamp(8px, 1.5vw, 12px);
+    }
+
+    .row {
+        border-radius: 3px !important;
+    }
+
+    .numberSection button {
+        font-size: clamp(8px, 1.5vw, 12px);
+    }
+
+    .numberSection button[style*="grid-area: range"] {
+        height: 35px;
+    }
+
+    .numberSection button[style*="grid-area: low"],
+    .numberSection button[style*="grid-area: even"],
+    .numberSection button[style*="grid-area: red"],
+    .numberSection button[style*="grid-area: black"],
+    .numberSection button[style*="grid-area: odd"],
+    .numberSection button[style*="grid-area: high"] {
+        height: 30px;
+    }
+}
+
+.chips {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 13px;
+    margin-bottom: 20px;
+
+    .chip {
+        cursor: pointer;
+    }
+}

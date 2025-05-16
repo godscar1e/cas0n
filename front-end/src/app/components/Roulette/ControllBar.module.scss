@@ -1,0 +1,39 @@
+.previousBets {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    ul {
+        margin-top: 10px;
+
+        li {
+            width: 29px;
+            height: 29px;
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .numberRed {
+            background-color: #FE2247;
+            color: #FFFFFF;
+        }
+
+        .numberBlack {
+            background-color: #1A2C38;
+            color: #FFFFFF;
+        }
+
+        .numberGreen {
+            background-color: #129379;
+            color: #FFFFFF;
+        }
+
+
+
+    }
+}

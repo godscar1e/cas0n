@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String         @id @default(cuid())
+  email               String         @unique
+  username            String?        @unique
+  password            String
+  referralCode        String         @unique
+  experience          Int            @default(0)
+  currency            String         @default("USD")
+  role                String         @default("user")
+  isActive            Boolean        @default(true)
+  isEmailVerified     Boolean        @default(false)
+  isBasicVerified     Boolean        @default(false)
+  twoFactorSecret     String?
+  isTwoFactorVerified Boolean        @default(false)
+  verificationCode    String?
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+  userBalance         UserBalance?   @relation(name: "UserBalance")
+  notifications       Notification[] @relation(name: "UserNotifications")
+  basicUserInfo       BasicUserInfo? @relation(name: "BasicUserInfo")
+  rouletteSpins       RouletteSpin[] @relation(name: "UserRouletteSpins")
+  chatMessages        ChatMessage[]  @relation(name: "UserChatMessages")
+  deposits            Deposits[]     @relation(name: "UserDeposits")
+  withdrawals         Withdrawals[]  @relation(name: "UserWithdrawals")
+  // tipnRains           TipnRain[]     @relation(name: "UserTipnRains")
+  // tipnRainsTo         TipnRain[]     @relation(name: "UserTipnRainsTo")
+  doubleSpins         DoubleSpin[]   @relation(name: "UserDoubleSpins")
+  doubleBets          DoubleBet[]    @relation(name: "UserDoubleBets")
+
+  @@map("user")
+}
+
+model UserBalance {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  balance   Decimal  @default(0.00)
+  updatedAt DateTime @updatedAt
+  user      User     @relation(name: "UserBalance", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_balance")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  userId    String
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(name: "UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model BasicUserInfo {
+  id          String @id @default(cuid())
+  userId      String @unique
+  country     String
+  name        String
+  lastName    String
+  dateOfBirth String
+  user        User   @relation(name: "BasicUserInfo", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("basic_user_info")
+}
+
+model RouletteSpin {
+  id          String   @id @default(cuid())
+  userId      String
+  username    String
+  betAmount   Decimal
+  isWin       Boolean
+  amountOfWin Decimal
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User     @relation(name: "UserRouletteSpins", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("roulette_spins")
+}
+
+model RouletteSpinNumbers {
+  id        String   @id @default(cuid())
+  number    Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("roulette_spin_numbers")
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  username  String
+  message   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(name: "UserChatMessages", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
+
+model Deposits {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Decimal
+  status    String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(name: "UserDeposits", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("deposits")
+}
+
+model Withdrawals {
+  id            String   @id @default(cuid())
+  userId        String
+  transactionId String
+  amount        Decimal
+  status        String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  user          User     @relation(name: "UserWithdrawals", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("withdrawals")
+}
+
+model TipnRain {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  currency  String
+  userToId  String
+  amount    Decimal
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  // user      User     @relation(name: "UserTipnRains", fields: [userId], references: [id], onDelete: Cascade)
+  // userTo    User     @relation(name: "UserTipnRainsTo", fields: [userToId], references: [id], onDelete: Cascade)
+
+  @@map("tipnrain")
+}
+
+model DoubleSpin {
+  id          String   @id @default(cuid())
+  gameId      String
+  userId      String
+  betAmount   Decimal
+  amountOfWin Decimal
+  betValue    String
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(name: "UserDoubleSpins", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("double_spins")
+}
+
+model DoubleBet {
+  id        String   @id @default(cuid())
+  gameId    String
+  userId    String
+  betAmount Decimal
+  betValue  String
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(name: "UserDoubleBets", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("double_bets")
+}

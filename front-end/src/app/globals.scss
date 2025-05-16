@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: linear-gradient(to bottom, #071B28, #0F212E);
+  // --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: linear-gradient(to bottom, #071B28, #0F212E);
+    --foreground: #ededed;
+  }
+}
+
+input {
+  outline: none;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Убираем стрелочки в Firefox */
+  & {
+    -moz-appearance: textfield;
+  }
+}
+
+
+body {
+  color: #E0F4F5;
+  background: var(--background);
+  font-size: 16px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wrapper {
+
+    // .container {
+    //   padding: 0 20px;
+
+    .main {
+      scrollbar-width: none; // Firefox
+      -ms-overflow-style: none; // Internet Explorer / Edge
+      scroll-behavior: smooth;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      // }
+    }
+  }
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-select {
+  appearance: none;
+  background-image: url('/icons/select-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center right 1.25rem;
+}
