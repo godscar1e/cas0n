@@ -209,7 +209,7 @@ export default function ControllBar({ onBetChange, potentialProfit, spinRoulette
 								</label>
 								<p className="text-checkboxColor">0.00 USD</p>
 							</div>
-							<div className="flex justify-between gap-2 items-center p-[2px] h-[37px] mt-2 text-sm font-light bg-primary rounded-[5px] drop-shadow-custom-black">
+							<div className="flex justify-between gap-2 items-center p-[2px] h-[37px] mt-2 text-sm font-light bg-primary rounded-[5px]">
 								<div className="flex">
 									<button
 										className={`h-[33px] px-[10px] rounded-[5px] ${winAction === 'reset' ? 'bg-bageColor text-mainwhite' : 'bg-primary text-checkboxColor'}`}
@@ -238,7 +238,7 @@ export default function ControllBar({ onBetChange, potentialProfit, spinRoulette
 								</label>
 								<p className="text-checkboxColor">0.00 USD</p>
 							</div>
-							<div className="flex justify-between gap-2 items-center p-[2px] h-[37px] mt-2 text-sm font-light bg-primary rounded-[5px] drop-shadow-custom-black">
+							<div className="flex justify-between gap-2 items-center p-[2px] h-[37px] mt-2 text-sm font-light bg-primary rounded-[5px]">
 								<div className="flex">
 									<button
 										className={`h-[33px] px-[10px] rounded-[5px] ${lossAction === 'reset' ? 'bg-bageColor text-mainwhite' : 'bg-primary text-checkboxColor'}`}
